@@ -1,0 +1,28 @@
+---
+ingress:
+  enabled: true
+  hosts:
+    - metrics.home.k8r.io
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    memory: 384Mi
+persistence:
+  enabled: true
+  type: pvc
+  accessModes: ["ReadWriteMany"]
+  storageClassName: synology-iscsi-storage
+  size: 5Gi
+grafana.ini:
+  feature_toggles:
+    publicDashboards: true
+  server:
+    root_url: http://metrics.home.k8r.io/
+sidecar:
+  dashboards:
+    enabled: true
+    provider:
+      allowUiUpdates: true
+      foldersFromFilesStructure: true
